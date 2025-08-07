@@ -1,4 +1,3 @@
-// context/musicPlayerContext.jsx
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 
 const MusicPlayerContext = createContext();
@@ -14,6 +13,7 @@ export function MusicPlayerProvider({ children }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
+  const [prevIndex, setPrevIndex] = useState(null); // ADD: Track the previous song index
 
   const audioRef = useRef(new Audio());
   const audio = audioRef.current;
@@ -76,30 +76,46 @@ export function MusicPlayerProvider({ children }) {
     if (activePlaylist.length && activePlaylist[currentIndex]) {
       const currentSong = activePlaylist[currentIndex];
 
-      audio.pause();
-      // Set CORS *before* assigning src
-      audio.crossOrigin = "anonymous";
-      audio.src = `${API}${currentSong.file}`;
-      audio.load();
+      // Only reload the song if it changes (i.e., new song selected)
+      if (audio.src !== `${API}${currentSong.file}`) {
+        audio.pause(); // Pause any current song
+        audio.crossOrigin = "anonymous";
+        audio.src = `${API}${currentSong.file}`;
+        audio.load(); // Load the new song
 
-      const tryAutoplay = async () => {
-        try {
-          if (isPlaying) await audio.play();
-        } catch (err) {
-          // Browser might block autoplay; will succeed after user clicks Play
-          console.warn("Autoplay blocked (will resume on user gesture):", err);
+        // If switching songs, reset the currentTime to 0
+        if (currentIndex !== prevIndex) {
+          audio.currentTime = 0;
+          localStorage.removeItem('currentTime'); // Remove the previous song's saved time
         }
-      };
 
-      tryAutoplay();
+        // Check if we have a saved currentTime from localStorage
+        const savedTime = localStorage.getItem('currentTime'); // Retrieve saved time from localStorage
+        if (savedTime && currentIndex === prevIndex) {
+          audio.currentTime = parseFloat(savedTime); // Set audio to the saved time for the same song
+        }
+
+        const tryAutoplay = async () => {
+          try {
+            if (isPlaying) await audio.play(); // Try autoplay if it's playing
+          } catch (err) {
+            console.warn("Autoplay blocked (will resume on user gesture):", err);
+          }
+        };
+
+        tryAutoplay(); // Try playing the song if it's supposed to play immediately
+        setPrevIndex(currentIndex); // Store the current index as the previous one
+      }
     }
-  }, [currentIndex, activePlaylist, isPlaying]); // include isPlaying so we retry play after a manual Play
-
-  // Time tracking
+  }, [currentIndex, activePlaylist, isPlaying, prevIndex]); // Add prevIndex to dependencies
+  
+  // Time tracking with persistence
   useEffect(() => {
     const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime);
       setTotalTime(audio.duration || 0);
+      // Persist the current time to localStorage
+      localStorage.setItem('currentTime', audio.currentTime); // Save currentTime to localStorage
     };
 
     const handleEnded = () => setIsPlaying(false);
@@ -113,7 +129,7 @@ export function MusicPlayerProvider({ children }) {
       audio.removeEventListener("ended", handleEnded);
       audio.removeEventListener("loadedmetadata", handleTimeUpdate);
     };
-  }, [audio]);
+  }, [audio]); // Keep time tracking logic
 
   // Controls
   const play = async () => {
@@ -173,4 +189,3 @@ export function MusicPlayerProvider({ children }) {
     </MusicPlayerContext.Provider>
   );
 }
-

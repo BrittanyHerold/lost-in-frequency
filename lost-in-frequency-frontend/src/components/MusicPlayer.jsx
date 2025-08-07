@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/musicPlayer.css";
 import { useMusicPlayer } from "../context/musicPlayerContext";
 
@@ -24,6 +24,14 @@ const MusicPlayer = () => {
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
+
+  // Track the current time in the audio element when it changes
+  useEffect(() => {
+    if (audioElement) {
+      // Sync the audio element's current time with the state
+      audioElement.currentTime = currentTime;
+    }
+  }, [currentTime, audioElement]);
 
   const handleProgressChange = (e) => {
     if (!audioElement || !audioElement.duration) return;

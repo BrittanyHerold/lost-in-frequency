@@ -9,18 +9,17 @@ const AppTitle = () => {
   const frequencyData = useAudioAnalyzer(analyser);
 
   const hasSignal =
-    analyser &&
-    isPlaying &&
-    frequencyData.some((n) => n > 2); // small threshold to ignore near-zero noise
+    !!analyser &&
+    !!isPlaying &&
+    frequencyData.some((n) => n > 2); // ignore tiny noise
 
   return (
     <h1 className="app-title">
       {"Lost In Frequency".split("").map((char, index) => {
-        const intensity = hasSignal
-          ? frequencyData[index % frequencyData.length] || 0
-          : 0;
+        const displayChar = char === " " ? "\u00A0" : char;
 
-        const scale = 1 + intensity / 255;
+        const raw = hasSignal ? frequencyData[index % frequencyData.length] || 0 : 0;
+        const scale = Math.min(1.6, 1 + raw / 255); // optional clamp
 
         return (
           <span
@@ -32,7 +31,7 @@ const AppTitle = () => {
               transition: "transform 0.1s ease-out",
             }}
           >
-            {char}
+            {displayChar}
           </span>
         );
       })}
@@ -41,6 +40,7 @@ const AppTitle = () => {
 };
 
 export default AppTitle;
+
 
 
 

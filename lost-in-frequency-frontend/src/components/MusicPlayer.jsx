@@ -76,14 +76,14 @@ const MusicPlayer = () => {
         <div className="progress-fill" style={{ width: `${percent}%` }} />
       </div>
 
-      <input
+      {/* <input
         type="range"
         value={percent}
         onChange={handleProgressChange}
         min="0"
         max="100"
         disabled={!totalTime}
-      />
+      />  */}
 
       <div className="bottom-controls">
         <span>

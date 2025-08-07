@@ -125,10 +125,21 @@
 
 .edit-playlist-btn,
 .delete-playlist-btn {
-  background: transparent;
-  border: none;
+  background: rgb(103, 99, 99);
+  border: 2px solid #4A057C; /* Dark purple */
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.edit-playlist-btn:hover,
+.delete-playlist-btn:hover {
+  background: #4A057C11; /* subtle purple hover background */
+  border-color: #4A057C;
 }
 
 /* === Modal Blur === */
@@ -137,5 +148,6 @@ body.modal-open main {
   pointer-events: none;
   user-select: none;
 }
+
 
 

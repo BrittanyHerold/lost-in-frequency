@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import '../styles/playlistBar.css';
 import { useMusicPlayer } from "../context/musicPlayerContext";
+import { Pencil, Trash2 } from "lucide-react"; // ✅ Import Lucide icons
 
 function PlaylistBar({
   playlists,
@@ -107,11 +108,23 @@ function PlaylistBar({
 
               {name !== 'All Songs' && (
                 <div className="playlist-actions">
-                  <button onClick={(e) => { e.stopPropagation(); onEditPlaylist(name); }}>
-                    ✏️
+                  <button
+                    className="edit-playlist-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEditPlaylist(name);
+                    }}
+                  >
+                    <Pencil size={16} />
                   </button>
-                  <button onClick={(e) => { e.stopPropagation(); deletePlaylist(name); }}>
-                    ❌
+                  <button
+                    className="delete-playlist-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deletePlaylist(name);
+                    }}
+                  >
+                    <Trash2 size={16} />
                   </button>
                 </div>
               )}
@@ -157,6 +170,7 @@ function PlaylistBar({
 }
 
 export default PlaylistBar;
+
 
 
 

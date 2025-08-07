@@ -1,0 +1,36 @@
+# Dependency directories
+node_modules/
+.env
+dist/
+build/
+
+# Logs and system files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+
+# Vite & Electron stuff
+.vite/
+*.local
+out/
+*.log
+
+# Mac junk
+*.swp
+Thumbs.db
+Desktop.ini
+
+# Ignore compiled Electron artifacts
+electron-builder-cache/
+*.asar
+*.dmg
+*.exe
+*.AppImage
+*.snap
+*.deb
+
+# Avoid accidental uploads of large binaries
+*.mp3
+uploads/
+

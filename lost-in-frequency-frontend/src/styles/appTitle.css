@@ -1,0 +1,44 @@
+/* === Title Wrapper === */
+.app-title-wrapper {
+  text-align: center;
+  padding-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* === Main Title Styling === */
+.wave-text,
+.app-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.8rem; /* upgraded from 2.5rem */
+  font-weight: 700;
+  color: #d6bcfa; /* light purple */
+  text-shadow: 0 0 10px rgba(74, 5, 124, 0.6);
+  letter-spacing: 0.1rem;
+  display: inline-block;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* === Animated Characters === */
+.wave-char {
+  display: inline-block;
+  transform-origin: bottom center;
+  animation: waveBounce 1.5s infinite ease-in-out;
+}
+
+.title-char.idle {
+  transform: scaleY(1);
+  opacity: 0.95;
+}
+
+
+/* === Animation Keyframes === */
+@keyframes waveBounce {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+

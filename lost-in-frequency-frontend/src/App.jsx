@@ -6,6 +6,7 @@ import EditPlaylistModal from "./components/EditPlaylistModal";
 import { useMusicPlayer } from "./context/musicPlayerContext";
 import axios from "axios";
 import UploadSong from './components/UploadSong';
+import AppTitle from './components/AppTitle';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -108,6 +109,9 @@ function App() {
 
   return (
     <div className="app-container">
+
+      <AppTitle />
+
       <PlaylistBar
         playlists={playlists}
         setPlaylists={setPlaylists}

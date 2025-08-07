@@ -37,8 +37,12 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// ✅ Static MP3 file access
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads"), {
+  setHeaders: (res, path) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+  }
+}));
+
 
 // ✅ Load songs.json
 app.get("/songs.json", (req, res) => {

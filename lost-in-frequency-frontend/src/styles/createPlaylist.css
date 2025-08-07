@@ -1,0 +1,70 @@
+/* === Create Playlist Modal === */
+
+/* Fullscreen dark overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.65);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal box */
+.modal-content {
+  background-color: #1c1c1e;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Close button */
+.close-modal {
+  font-size: 1.5rem;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+/* Text input */
+.modal-content input[type="text"] {
+  background-color: #2a2a2e;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 0.5rem;
+  color: white;
+}
+
+/* Buttons */
+.modal-content button {
+  background-color: #7e5bef;
+  color: white;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #a78bfa;
+}
+
+/* Error message */
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+

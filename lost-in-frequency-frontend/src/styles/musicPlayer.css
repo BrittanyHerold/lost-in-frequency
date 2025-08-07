@@ -1,0 +1,95 @@
+/* === Global Styles === */
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: #121212;
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+/* === Music Player Container === */
+.player {
+  position: relative;
+  background-color: #f4f4f4;
+  color: black;
+  padding: 20px;
+  border-radius: 10px;
+  border: double 6px rgb(74, 5, 124);
+  width: 300px;
+  margin: auto;
+}
+
+/* === Album Art === */
+#albumArt {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+  display: block;
+  margin: 10px auto;
+}
+
+/* === Playback Controls === */
+.controls button {
+  font-size: 20px;
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+  border-color: rgb(74, 5, 124);
+}
+
+.controls button:hover {
+  background-color: rgba(182, 135, 216, 0.38);
+}
+
+/* === Shuffle & Repeat Buttons === */
+#repeatButton,
+#shuffleButton {
+  position: absolute;
+  bottom: 10px;
+  font-size: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#repeatButton {
+  left: 10px;
+}
+
+#shuffleButton {
+  right: 10px;
+}
+
+#repeatButton.active,
+#shuffleButton.active {
+  background-color: rgb(74, 5, 124);
+  border-radius: 25%;
+}
+
+/* === Toast Notification === */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: rgb(74, 5, 124);
+  color: #fff;
+  padding: 15px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  border: 2px solid rgba(182, 135, 216, 0.38);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: translateY(20px);
+  z-index: 1000;
+}
+
+.toast.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+

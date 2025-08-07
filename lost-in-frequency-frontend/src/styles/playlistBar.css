@@ -1,0 +1,141 @@
+/* === Sidebar Panel === */
+#sidebar {
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 250px;
+  height: 100%;
+  background: #222;
+  padding: 15px;
+  transform: translateX(-250px);
+  transition: transform 0.3s ease-in-out;
+}
+
+#sidebar.open {
+  transform: translateX(0);
+}
+
+#togglePlaylist {
+  position: absolute;
+  left: 260px;
+  top: 10px;
+  background: rgb(74, 5, 124);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* === Playlist Section === */
+#playlistPanel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px;
+  overflow: hidden;
+}
+
+
+#playlistList li {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #444;
+  color: white;
+}
+
+#playlistList li:hover {
+  background: #333;
+}
+
+#playlistList li .active {
+  font-weight: bold;
+  background-color: #444;
+}
+
+#createPlaylistBtn {
+  background: rgb(74, 5, 124);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* === Playlist Songs View === */
+.playlist-songs-container {
+  flex-grow: 1;
+  max-height: 75vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f0f0f0;
+}
+
+.playlist-songs-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.playlist-songs-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.playlist-songs-container::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+#playlistSongs {
+  list-style: none;
+  padding: 0;
+}
+
+#playlistSongs li {
+  padding: 8px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+#playlistSongs li:hover {
+  background: #555;
+}
+
+/* 🎧 Now Playing Highlight */
+#playlistSongs .now-playing {
+  background-color: rgb(74, 5, 124);
+  color: white;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  padding: 8px;
+  box-shadow: 0 0 10px rgba(126, 91, 239, 0.6);
+}
+
+/* === Playlist Item Actions === */
+.playlist-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.playlist-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.edit-playlist-btn,
+.delete-playlist-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+/* === Modal Blur === */
+body.modal-open main {
+  filter: blur(5px);
+  pointer-events: none;
+  user-select: none;
+}
+
+

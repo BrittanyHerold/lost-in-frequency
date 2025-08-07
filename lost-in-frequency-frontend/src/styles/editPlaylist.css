@@ -1,0 +1,99 @@
+/* === Fullscreen Overlay Container === */
+#editPlaylistModal.modal {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Modal Box === */
+#editPlaylistModal .modal-content {
+  background-color: rgb(127, 123, 123);
+  color: rgb(74, 5, 124);
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 500px;
+  max-height: 80vh;
+  overflow-y: auto;
+  font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* === Close Button === */
+#editPlaylistModal .close-modal {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+}
+
+/* === Song Selection List === */
+#editSongSelectionList {
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid white;
+  padding: 10px;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+
+/* === Individual Song Item === */
+.song-option {
+  cursor: pointer;
+  padding: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.2s;
+}
+
+.song-option:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.song-option.selected {
+  background-color: rgba(74, 5, 124, 0.3);
+  font-weight: bold;
+}
+
+/* === Buttons === */
+#saveEditPlaylistBtn,
+#cancelEditPlaylistBtn {
+  padding: 10px 16px;
+  margin-top: 20px;
+  margin-right: 10px;
+  background-color: rgb(74, 5, 124);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#cancelEditPlaylistBtn {
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+}
+
+#saveEditPlaylistBtn:hover,
+#cancelEditPlaylistBtn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* === Error Message === */
+.error-message {
+  color: #ff4d4f;
+  margin: 8px 0;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+

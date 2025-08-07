@@ -13,6 +13,7 @@ const MusicPlayer = () => {
     pause,
     next,
     prev,
+    audioElement,
   } = useMusicPlayer();
 
   const currentSong = activePlaylist[currentIndex];
@@ -25,11 +26,22 @@ const MusicPlayer = () => {
   };
 
   const handleProgressChange = (e) => {
-    const audio = document.querySelector("audio");
-    if (!audio || !audio.duration) return;
-    const newTime = (e.target.value / 100) * audio.duration;
-    audio.currentTime = newTime;
+    if (!audioElement || !audioElement.duration) return;
+    const newTime = (e.target.value / 100) * audioElement.duration;
+    audioElement.currentTime = newTime;
   };
+
+  const handleProgressClick = (e) => {
+    if (!audioElement || !totalTime) return;
+    const bar = e.currentTarget;
+    const rect = bar.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const newTime = (clickX / width) * totalTime;
+    audioElement.currentTime = newTime;
+  };
+
+  const percent = totalTime ? (currentTime / totalTime) * 100 : 0;
 
   return (
     <div className="player">
@@ -52,9 +64,13 @@ const MusicPlayer = () => {
         <button onClick={next}>⏭</button>
       </div>
 
+      <div className="progress-bar" onClick={handleProgressClick}>
+        <div className="progress-fill" style={{ width: `${percent}%` }} />
+      </div>
+
       <input
         type="range"
-        value={totalTime ? (currentTime / totalTime) * 100 : 0}
+        value={percent}
         onChange={handleProgressChange}
         min="0"
         max="100"
@@ -71,6 +87,7 @@ const MusicPlayer = () => {
 };
 
 export default MusicPlayer;
+
 
 
 

@@ -93,3 +93,25 @@ body {
   transform: translateY(0);
 }
 
+.progress-bar {
+  position: relative;
+  height: 8px;
+  background: #2b2640;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 8px 0 12px;
+}
+.progress-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  height: 100%;
+  width: 0;
+  background: #a079ff; /* your purple */
+  border-radius: inherit;
+}
+
+input[type="range"] {
+  display: none;
+}
+
+

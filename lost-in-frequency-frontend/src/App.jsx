@@ -10,7 +10,7 @@ import UploadSong from './components/UploadSong';
 const API_URL = import.meta.env.VITE_API_URL;
 
 function App() {
-  const { songs, setCurrentIndex } = useMusicPlayer();
+  const { songs, setCurrentIndex, setActivePlaylist } = useMusicPlayer();
 
   const [playlists, setPlaylists] = useState({});
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -37,7 +37,8 @@ function App() {
         if (firstValid) {
           setCurrentPlaylistName(firstValid.name);
           setCurrentPlaylistIndex(0);
-          setCurrentIndex(0); // Sync with context!
+          setCurrentIndex(0);
+          setActivePlaylist(firstValid.songs); // ✅ Sync playlist context
         }
       } catch (error) {
         console.error("Failed to fetch playlists:", error);
@@ -45,7 +46,7 @@ function App() {
     };
 
     fetchPlaylists();
-  }, [setCurrentIndex]);
+  }, [setCurrentIndex, setActivePlaylist]);
 
   const handleSavePlaylist = async (name, songs) => {
     if (!songs || songs.length === 0) {
@@ -69,8 +70,8 @@ function App() {
       setShowCreateModal(false);
       setCurrentPlaylistName(savedPlaylist.name);
       setCurrentPlaylistIndex(0);
-      setCurrentIndex(0); // Sync with context!
-
+      setCurrentIndex(0);
+      setActivePlaylist(savedPlaylist.songs); // ✅ Sync playlist context
     } catch (err) {
       console.error("❌ Could not save playlist:", err);
       alert("There was an error saving the playlist.");
@@ -97,7 +98,8 @@ function App() {
 
     setCurrentPlaylistName(newName);
     setCurrentPlaylistIndex(0);
-    setCurrentIndex(0); // Sync with context!
+    setCurrentIndex(0);
+    setActivePlaylist(selectedSongs); // ✅ Sync playlist context
     setEditPlaylistName(null);
     setShowEditModal(false);
   };
@@ -115,7 +117,7 @@ function App() {
         setCurrentPlaylistName={setCurrentPlaylistName}
         currentlyPlayingSong={currentPlaylist[currentPlaylistIndex]}
         setCurrentPlaylistIndex={setCurrentPlaylistIndex}
-        setCurrentlyPlayingSong={() => {}} // can be removed soon
+        setCurrentlyPlayingSong={() => {}} // legacy
       />
 
       <MusicPlayer

@@ -1,4 +1,3 @@
-// PlaylistBar.jsx
 import React, { useEffect, useState, useCallback } from 'react';
 import '../styles/playlistBar.css';
 import { useMusicPlayer } from "../context/musicPlayerContext";
@@ -14,7 +13,12 @@ function PlaylistBar({
   setCurrentPlaylistIndex,
   setCurrentlyPlayingSong
 }) {
-  const { songs, setCurrentIndex } = useMusicPlayer();
+  const {
+    songs,
+    setCurrentIndex,
+    setActivePlaylist // ✅ Get this from context
+  } = useMusicPlayer();
+
   const [search, setSearch] = useState('');
   const [isOpen, setIsOpen] = useState(true);
   const [showSongs, setShowSongs] = useState(true);
@@ -71,9 +75,10 @@ function PlaylistBar({
 
     if (index !== -1) {
       setCurrentPlaylistIndex(index);
-      setCurrentPlaylistName(currentPlaylistName); // optional reassertion
+      setCurrentPlaylistName(currentPlaylistName);
       setCurrentlyPlayingSong(song);
-      setCurrentIndex(index); // trigger context to update audio
+      setActivePlaylist(currentPlaylist); // ✅ Update active playlist in context
+      setCurrentIndex(index); // ✅ Now this index applies to the right list
     }
   };
 
@@ -152,6 +157,7 @@ function PlaylistBar({
 }
 
 export default PlaylistBar;
+
 
 
 

@@ -9,6 +9,7 @@ export function useMusicPlayer() {
 
 export function MusicPlayerProvider({ children }) {
   const [songs, setSongs] = useState([]);
+  const [activePlaylist, setActivePlaylist] = useState([]); // 🔄 Active list of songs
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -31,6 +32,7 @@ export function MusicPlayerProvider({ children }) {
       }));
 
       setSongs(normalized);
+      setActivePlaylist(normalized); // ✅ Default to "All Songs"
     } catch (err) {
       console.error("Error fetching songs:", err);
     }
@@ -41,13 +43,13 @@ export function MusicPlayerProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (songs.length > 0) {
+    if (activePlaylist.length > 0 && activePlaylist[currentIndex]) {
       audio.pause();
-      audio.src = `${API}${songs[currentIndex].file}`;
+      audio.src = `${API}${activePlaylist[currentIndex].file}`;
       audio.load();
       if (isPlaying) audio.play();
     }
-  }, [currentIndex, songs]);
+  }, [currentIndex, activePlaylist]);
 
   useEffect(() => {
     const handleTimeUpdate = () => {
@@ -81,19 +83,21 @@ export function MusicPlayerProvider({ children }) {
   };
 
   const next = () => {
-    setCurrentIndex((prev) => (prev + 1) % songs.length);
+    setCurrentIndex((prev) => (prev + 1) % activePlaylist.length);
   };
 
   const prev = () => {
-    setCurrentIndex((prev) => (prev - 1 + songs.length) % songs.length);
+    setCurrentIndex((prev) => (prev - 1 + activePlaylist.length) % activePlaylist.length);
   };
 
   return (
     <MusicPlayerContext.Provider
       value={{
-        songs,
+        songs, // all songs
+        activePlaylist,
+        setActivePlaylist,
         currentIndex,
-        currentSong: songs[currentIndex],
+        currentSong: activePlaylist[currentIndex],
         play,
         pause,
         next,
@@ -109,5 +113,3 @@ export function MusicPlayerProvider({ children }) {
     </MusicPlayerContext.Provider>
   );
 }
-
-

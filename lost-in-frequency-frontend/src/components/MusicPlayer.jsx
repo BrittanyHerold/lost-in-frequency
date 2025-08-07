@@ -1,19 +1,21 @@
-// MusicPlayer.jsx
-import React, { useCallback } from "react";
+import React from "react";
 import "../styles/musicPlayer.css";
 import { useMusicPlayer } from "../context/musicPlayerContext";
 
 const MusicPlayer = () => {
   const {
-    currentSong,
+    activePlaylist,
+    currentIndex,
     isPlaying,
     currentTime,
     totalTime,
     play,
     pause,
     next,
-    prev
+    prev,
   } = useMusicPlayer();
+
+  const currentSong = activePlaylist[currentIndex];
 
   const formatTime = (time) => {
     if (isNaN(time)) return "0:00";
@@ -33,7 +35,11 @@ const MusicPlayer = () => {
     <div className="player">
       <h2>{currentSong?.title || "No Song Playing"}</h2>
       <img
-        src={currentSong?.albumArt?.trim() || currentSong?.coverArt?.trim() || "coverArt/default.webp"}
+        src={
+          currentSong?.albumArt?.trim() ||
+          currentSong?.coverArt?.trim() ||
+          "coverArt/default.webp"
+        }
         alt="Album Art"
         id="albumArt"
       />
@@ -56,13 +62,16 @@ const MusicPlayer = () => {
       />
 
       <div className="bottom-controls">
-        <span>{formatTime(currentTime)} / {formatTime(totalTime)}</span>
+        <span>
+          {formatTime(currentTime)} / {formatTime(totalTime)}
+        </span>
       </div>
     </div>
   );
 };
 
 export default MusicPlayer;
+
 
 
 

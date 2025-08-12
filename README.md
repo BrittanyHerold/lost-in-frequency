@@ -28,41 +28,23 @@
    ```bash
    git clone https://github.com/BrittanyHerold/lost-in-frequency.git
    cd lost-in-frequency
-Create env files (first time only)
-
-backend/.env
-
-ini
-Copy
-Edit
-PORT=3001
-MONGODB_URI=<your MongoDB connection string>   # leave blank to run read-only
-CORS_ORIGINS=http://localhost:5173,http://localhost:3000
-frontend/.env
-
-ini
-Copy
-Edit
-VITE_API_URL=http://localhost:3001
-Install dependencies
-
-bash
-Copy
-Edit
-# from repo root
-(cd backend && npm install)
-(cd frontend && npm install)
-Run the app (backend + frontend)
-
-bash
-Copy
-Edit
-npm start
-Backend: http://localhost:3001
-
-Frontend: http://localhost:5173
-
-
+2. **Create env files**
+- backend/.env
+  ```bash
+  PORT=3001
+  MONGODB_URI=mongodb+srv://brittanyherold94:Ilovelauren13%21@lost-in-frequency.xia1evl.mongodb.net/lostinfrequency?retryWrites=true&w=majority&appName=Lost-In-Frequency
+  CORS_ORIGINS=http://localhost:5173,http://localhost:3000
+- frontend/.env
+  ```bash
+  VITE_API_URL=http://localhost:3001
+3. **Install Dependencies From Repo Root**
+  ```bash
+  (cd backend && npm install)
+  (cd frontend && npm install)
+4. **Run the App**
+  ```bash
+  npm start
+  
 ---
 
 ## 🧩 Directory Structure

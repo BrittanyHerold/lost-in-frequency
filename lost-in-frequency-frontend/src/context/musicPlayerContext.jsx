@@ -1,5 +1,4 @@
 // src/context/musicPlayerContext.jsx
-// src/context/musicPlayerContext.jsx
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
 import { normalizeSongs } from "../utils/normalizeSong"; // ✅ use shared normalizer
 

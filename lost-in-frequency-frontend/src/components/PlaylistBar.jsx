@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import '../styles/playlistBar.css';
+import React, { useEffect, useState, useCallback } from "react";
+import "../styles/playlistBar.css";
 import { useMusicPlayer } from "../context/musicPlayerContext";
-import { Pencil, Trash2 } from "lucide-react"; // ✅ Import Lucide icons
+import { Pencil, Trash2 } from "lucide-react";
 
 function PlaylistBar({
   playlists,
+  visibleSongs,                     
   setPlaylists,
   setShowCreateModal,
   onEditPlaylist,
@@ -14,78 +15,82 @@ function PlaylistBar({
   setCurrentPlaylistIndex,
   setCurrentlyPlayingSong
 }) {
-  const {
-    songs,
-    setCurrentIndex,
-    setActivePlaylist // ✅ Get this from context
-  } = useMusicPlayer();
+  const { songs, setCurrentIndex } = useMusicPlayer(); 
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [isOpen, setIsOpen] = useState(true);
   const [showSongs, setShowSongs] = useState(true);
 
+  // Keep "All Songs" list updated from context songs
   useEffect(() => {
     if (songs.length > 0) {
       setPlaylists((prev) => ({
         ...prev,
-        'All Songs': songs,
+        "All Songs": songs,
       }));
     }
   }, [songs, setPlaylists]);
 
+  // Persist playlists 
   useEffect(() => {
-    localStorage.setItem('playlists', JSON.stringify(playlists));
+    localStorage.setItem("playlists", JSON.stringify(playlists));
   }, [playlists]);
 
-  const deletePlaylist = useCallback(async (name) => {
-    if (name === 'All Songs') return;
-    if (!window.confirm(`Delete "${name}"?`)) return;
+  const deletePlaylist = useCallback(
+    async (name) => {
+      if (name === "All Songs") return;
+      if (!window.confirm(`Delete "${name}"?`)) return;
 
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/playlists/name/${encodeURIComponent(name)}`,
-        { method: "DELETE" }
-      );
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/playlists/name/${encodeURIComponent(
+            name
+          )}`,
+          { method: "DELETE" }
+        );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || "Failed to delete playlist from server");
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Failed to delete playlist from server");
+        }
+
+        setPlaylists((prev) => {
+          const updated = { ...prev };
+          delete updated[name];
+          return updated;
+        });
+
+        if (currentPlaylistName === name) {
+          setCurrentPlaylistName("All Songs");
+          setShowSongs(true);
+        }
+      } catch (error) {
+        console.error("❌ Delete failed:", error);
+        alert(`Failed to delete playlist: ${error.message}`);
       }
-
-      setPlaylists((prev) => {
-        const updated = { ...prev };
-        delete updated[name];
-        return updated;
-      });
-
-      if (currentPlaylistName === name) {
-        setCurrentPlaylistName("All Songs");
-        setShowSongs(true);
-      }
-    } catch (error) {
-      console.error("❌ Delete failed:", error);
-      alert(`Failed to delete playlist: ${error.message}`);
-    }
-  }, [currentPlaylistName, setPlaylists, setCurrentPlaylistName]);
+    },
+    [currentPlaylistName, setPlaylists, setCurrentPlaylistName]
+  );
 
   const toggleSidebar = () => setIsOpen((o) => !o);
 
   const handleSongClick = (song) => {
-    const currentPlaylist = playlists[currentPlaylistName] || [];
-    const index = currentPlaylist.findIndex((s) => s.file === song.file);
+    const list = visibleSongs || [];
+    const index = list.findIndex((s) => s.file === song.file);
 
     if (index !== -1) {
       setCurrentPlaylistIndex(index);
       setCurrentPlaylistName(currentPlaylistName);
       setCurrentlyPlayingSong(song);
-      setActivePlaylist(currentPlaylist); // ✅ Update active playlist in context
-      setCurrentIndex(index); // ✅ Now this index applies to the right list
+      setCurrentIndex(index);
     }
   };
 
   return (
-    <aside id="sidebar" className={isOpen ? 'open' : ''}>
-      <button id="togglePlaylist" onClick={toggleSidebar}>☰ Playlists</button>
+    <aside id="sidebar" className={isOpen ? "open" : ""}>
+      <button id="togglePlaylist" onClick={toggleSidebar}>
+        ☰ Playlists
+      </button>
       <div id="playlistPanel">
         <h2>🎵 Playlists</h2>
 
@@ -93,7 +98,7 @@ function PlaylistBar({
           {Object.keys(playlists).map((name) => (
             <li key={name} className="playlist-item">
               <span
-                className={name === currentPlaylistName ? 'active' : ''}
+                className={name === currentPlaylistName ? "active" : ""}
                 onClick={() => {
                   if (name === currentPlaylistName) {
                     setShowSongs((prev) => !prev);
@@ -106,7 +111,7 @@ function PlaylistBar({
                 {name}
               </span>
 
-              {name !== 'All Songs' && (
+              {name !== "All Songs" && (
                 <div className="playlist-actions">
                   <button
                     className="edit-playlist-btn"
@@ -148,13 +153,15 @@ function PlaylistBar({
 
           {showSongs && (
             <ul id="playlistSongs">
-              {(playlists[currentPlaylistName] || [])
-                .filter((song) => song.title.toLowerCase().includes(search.toLowerCase()))
+              {(visibleSongs || [])
+                .filter((song) =>
+                  song.title.toLowerCase().includes(search.toLowerCase())
+                )
                 .map((song, index) => (
                   <li
                     key={song._id || song.file || `${song.title}-${index}`}
                     className={
-                      currentlyPlayingSong?.file === song.file ? 'now-playing' : ''
+                      currentlyPlayingSong?.file === song.file ? "now-playing" : ""
                     }
                     onClick={() => handleSongClick(song)}
                   >
@@ -170,6 +177,7 @@ function PlaylistBar({
 }
 
 export default PlaylistBar;
+
 
 
 

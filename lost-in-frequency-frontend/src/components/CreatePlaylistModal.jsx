@@ -27,9 +27,9 @@ function CreatePlaylistModal({ songs = [], onSave, onCancel }) {
     const transformedSongs = selected.map((song) => ({
       title: song.title,
       artist: song.artist || "",
-      file: song.file || song.filePath || "",
+      file: song.file || "",
       duration: song.duration || "",
-      coverArt: song.albumArt || "coverArt/default.webp",
+      coverArt: song.coverArt || "/coverArt/default.webp",
     }));
 
     // ✅ Add this here:

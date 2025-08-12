@@ -6,8 +6,8 @@ function EditPlaylistModal({ playlistName, allSongs = [], initialSongs = [], onS
   console.log("playlistName:", playlistName);
   console.log("initialSongs:", initialSongs);
   console.log("allSongs:", allSongs);
-  console.log("🎯 initialSongs filePaths:", initialSongs.map(s => s.filePath));
-  console.log("🎯 allSongs filePaths:", allSongs.map(s => s.filePath));
+  console.log("🎯 initialSongs file:", initialSongs.map(s => s.file));
+  console.log("🎯 allSongs file:", allSongs.map(s => s.file));
 
 
   const [name, setName] = useState('');
@@ -18,7 +18,7 @@ function EditPlaylistModal({ playlistName, allSongs = [], initialSongs = [], onS
     if (playlistName && initialSongs && allSongs?.length > 0) {
       console.log("✅ Matching songs...");
       const matchedSongs = allSongs.filter((song) =>
-        initialSongs.some((s) => s.filePath === song.filePath)
+        initialSongs.some((s) => s.file === song.file)
       );
       console.log("Matched Songs:", matchedSongs);
 
@@ -31,8 +31,8 @@ function EditPlaylistModal({ playlistName, allSongs = [], initialSongs = [], onS
 
   const toggleSong = (song) => {
     setSelected((prev) =>
-      prev.some((s) => s.filePath === song.filePath)
-        ? prev.filter((s) => s.filePath !== song.filePath)
+      prev.some((s) => s.file === song.file)
+        ? prev.filter((s) => s.file !== song.file)
         : [...prev, song]
     );
   };
@@ -79,10 +79,10 @@ function EditPlaylistModal({ playlistName, allSongs = [], initialSongs = [], onS
             <p>No songs available.</p>
           ) : (
             allSongs.map((song) => {
-              const isSelected = selected?.some((s) => s.filePath === song.filePath);
+              const isSelected = selected?.some((s) => s.file === song.file);
               return (
                 <div
-                  key={song.filePath}
+                  key={song.file}
                   className={`song-option ${isSelected ? 'selected' : ''}`}
                   onClick={() => toggleSong(song)}
                 >

@@ -56,12 +56,11 @@ const MusicPlayer = () => {
       <h2>{currentSong?.title || "No Song Playing"}</h2>
       <img
         src={
-          currentSong?.albumArt?.trim() ||
           currentSong?.coverArt?.trim() ||
-          "coverArt/default.webp"
+          "/coverArt/default.webp"
         }
         alt="Album Art"
-        id="albumArt"
+        id="coverArt"
       />
 
       <div className="controls">

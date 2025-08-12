@@ -146,7 +146,7 @@ function App() {
           initialSongs={
             (playlists[editPlaylistName] || []).map((song) =>
               songs.find(
-                (s) => s.file === song.file || s.filePath === song.filePath
+                (s) => s.file === song.file 
               )
             ).filter(Boolean)
           }

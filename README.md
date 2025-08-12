@@ -76,7 +76,7 @@ lost-in-frequency/
 │  ├─ uploads/                  # Saved MP3 files (served at /uploads)
 │  └─ coverArt/                 # Extracted artwork + default.webp (served at /coverArt)
 │
-├─ frontend/                    # (rename here if your folder differs)
+├─ lost-in-frequency-frontend/                  
 │  ├─ package.json
 │  ├─ .env                      # VITE_API_URL=http://localhost:3001
 │  ├─ index.html
